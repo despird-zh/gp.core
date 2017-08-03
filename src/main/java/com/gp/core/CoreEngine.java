@@ -136,8 +136,8 @@ public class CoreEngine{
 	        
 	        for (CoreInitializer initializer : svcloader) {
 	        	
-	        	LOGGER.info("Initializer:{} is loaded.",initializer.hookerName);
-	        	regLifecycleHooker(initializer.getLifecycleHooker());
+	        		LOGGER.info("Initializer : {} is loaded.",initializer.getClass().getName());
+	        		regLifecycleHooker(initializer.getLifecycleHooker());
 	        }
 		}
 		
