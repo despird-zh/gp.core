@@ -3,7 +3,7 @@
   <groupId>com.gp</groupId>
   <artifactId>gp-core</artifactId>
   <version>0.1</version>
-  <name>s</name>
+  <name>gp-core</name>
   <description>ss</description>
   	<properties>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
