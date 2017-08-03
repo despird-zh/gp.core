@@ -65,7 +65,7 @@ public class ServiceFilter extends OncePerRequestFilter {
 	 * so don't change it pattern 
 	 **/
 	public static final String FILTER_PREFIX = "/gpapi";
-	
+		
 	/**
 	 * Define the state of request 
 	 * 
@@ -97,8 +97,7 @@ public class ServiceFilter extends OncePerRequestFilter {
 		Assert.notNull(configSource, "CorsConfigurationSource must not be null");
 		this.configSource = configSource;
 	}
-
-
+	
 	/**
 	 * Configure a custom {@link CorsProcessor} to use to apply the matched
 	 * {@link CorsConfiguration} for a request.
