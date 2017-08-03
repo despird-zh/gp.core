@@ -2,10 +2,7 @@ package com.gp.web;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 import com.gp.core.CoreConstants;
-import com.gp.validate.ValidateMessage;
 
 /**
  * ActionResult Wrap the result of JSON data.
