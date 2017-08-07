@@ -6,6 +6,7 @@ import com.gp.disruptor.EventPayload;
 import com.gp.disruptor.EventType;
 import com.gp.info.InfoId;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -227,5 +228,10 @@ public class CoreEventLoad implements EventPayload{
 		this.state = state;
 	}
 
+	@Override
+	public Collection<EventPayload> getChainEventPayloads() {
+		
+		return null;
+	}
 
 }
