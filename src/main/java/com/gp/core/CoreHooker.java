@@ -42,19 +42,7 @@ public class CoreHooker extends EventHooker<CoreEventLoad>{
 
 		CoreEventLoad coreload = (CoreEventLoad) payload;
 		persistLocal(coreload);
-		Operations operation = Operations.valueOf(coreload.getOperation());
-		try {
-			switch (operation) {
-				case UPDATE_BASIC_SETTING:
-					CoreFacade.handleUpdateAccount(coreload);
-					break;
-				default:
-					break;
-			}
-		}catch(CoreException ce){
 
-			throw new RingEventException("Fail handle core event payload", ce);
-		}
 	}
 
 
