@@ -146,10 +146,6 @@ public class CoreEngine{
 			
 			// fire up the Lifecycle event to trigger process
 			fireEvent(LifeState.INITIAL);
-
-			// register the core event hooker
-			CoreHooker coreHooker = new CoreHooker();
-			EventDispatcher.getInstance().regEventHooker(coreHooker);
 			
 			this.state = LifeState.INITIAL;
 		}
