@@ -19,9 +19,6 @@ import java.util.Map;
  **/
 public class CoreEventLoad extends EventPayload{
 
-	/** the event type */
-	private EventType eventType;
-
 	/** the object id */
 	private InfoId<?> objectId;
 
@@ -60,7 +57,7 @@ public class CoreEventLoad extends EventPayload{
 	public CoreEventLoad() {
 		this.timestamp = System.currentTimeMillis();
 		this.predicates = new HashMap<>();
-		this.eventType = EventType.CORE;
+		this.setEventType(EventType.CORE);
 	}
 	
 	/**
@@ -77,12 +74,6 @@ public class CoreEventLoad extends EventPayload{
 	public void setObjectId(InfoId<?> objectId) {
 
 		this.objectId = objectId;
-	}
-	
-	@Override
-	public EventType getEventType() {
-		
-		return eventType;
 	}
 
 	/**
