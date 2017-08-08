@@ -17,7 +17,7 @@ import java.util.Map;
  * @version 0.1 2015-12-10
  * 
  **/
-public class CoreEventLoad implements EventPayload{
+public class CoreEventLoad extends EventPayload{
 
 	/** the event type */
 	private EventType eventType;
@@ -226,12 +226,6 @@ public class CoreEventLoad implements EventPayload{
 
 	public void setState(String state) {
 		this.state = state;
-	}
-
-	@Override
-	public Collection<EventPayload> getChainEventPayloads() {
-		
-		return null;
 	}
 
 }
