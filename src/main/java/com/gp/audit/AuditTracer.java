@@ -88,7 +88,7 @@ public class AuditTracer {
 	}
 	
 	/**
-	 * Set the elapse time
+	 * Set the elapse time, use the current time as end point.
 	 **/
 	public void setElapsedTime(){
 		
