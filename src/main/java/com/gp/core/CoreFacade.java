@@ -94,7 +94,7 @@ public class CoreFacade {
 			if(InfoId.isValid(coreload.getObjectId()))
 				operinfo.setObjectId(coreload.getObjectId().toString());
 			
-			operinfo.setOperationTime(new Date(System.currentTimeMillis()));
+			operinfo.setOperationTime(new Date(coreload.getTimestamp()));
 			
 			svcctx.setTraceInfo(operinfo);
 			operlogservice.addOperLog(svcctx, operinfo);

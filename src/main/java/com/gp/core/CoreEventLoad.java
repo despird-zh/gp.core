@@ -28,7 +28,7 @@ public class CoreEventLoad extends EventPayload{
 	private Long elapse = 0L;
 
 	/** the operation predicates */
-	private Map<String, String> predicates = null;
+	private Map<String, Object> predicates = null;
 
 	/** the execute message */
 	private String message = null;
@@ -167,11 +167,11 @@ public class CoreEventLoad extends EventPayload{
 	/**
 	 * Get predicate map
 	 **/
-	public Map<String, String> getPredicates() {
+	public Map<String, Object> getPredicates() {
 		return predicates;
 	}
 
-	public void addPredicates(Map<String, String> predicates) {
+	public void addPredicates(Map<String, Object> predicates) {
 
 		if(predicates != null)
 			this.predicates.putAll(predicates);

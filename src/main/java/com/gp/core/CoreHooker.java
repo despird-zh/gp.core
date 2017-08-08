@@ -8,7 +8,6 @@ import com.gp.exception.CoreException;
 import java.io.IOException;
 import java.util.Date;
 
-import org.apache.commons.lang.mutable.MutableObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,10 +60,8 @@ public class CoreHooker extends EventHooker<CoreEventLoad>{
 			operaudit.setTarget(payload.getObjectId().toString());
 		
 		operaudit.setOperation(payload.getOperation());
-		MutableObject pjson;
 		try {
-			pjson = AuditConverter.mapToJson(payload.getPredicates());
-			operaudit.setPredicates((String)pjson.getValue());
+			operaudit.setPredicates(AuditConverter.mapToJson(payload.getPredicates()));
 		} catch (IOException e) {
 			LOGGER.error("error to convert predicate map");
 		}

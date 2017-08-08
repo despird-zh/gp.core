@@ -22,14 +22,14 @@ public class AuditTracer {
 	/** the target data EntryKey */
 	private InfoId<?> objectId = null;
 	/** predicateMap */
-	private Map<String, String> predicateMap = null;
+	private Map<String, Object> predicateMap = null;
 
 	/**
 	 * Default constructor 
 	 **/
 	public AuditTracer(){
 		this.timestamp = System.currentTimeMillis();
-		predicateMap = new HashMap<String, String>();
+		predicateMap = new HashMap<String, Object>();
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class AuditTracer {
 	public AuditTracer(String verb){
 		this.verb = verb;
 		this.timestamp = System.currentTimeMillis();
-		predicateMap = new HashMap<String, String>();
+		predicateMap = new HashMap<String, Object>();
 	}
 
 	/**
@@ -150,17 +150,24 @@ public class AuditTracer {
 	/**
 	 * Get predicate map 
 	 **/
-	public Map<String, String> getPredicates() {
+	public Map<String, Object> getPredicates() {
 		return predicateMap;
 	}
 
-	public void addPredicates(Map<String, String> predicatemap) {
+	/**
+	 * Add audit predicate map 
+	 * @param predicatemap the map of predicates
+	 **/
+	public void addPredicates(Map<String, Object> predicatemap) {
 
 		if(predicatemap != null)
 			this.predicateMap.putAll(predicatemap);
 		
 	}
 	
+	/**
+	 * Clear the predicates map 
+	 **/
 	public void clearPredicates(){
 		if(predicateMap == null)
 			return;

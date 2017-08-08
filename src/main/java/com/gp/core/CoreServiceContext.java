@@ -83,7 +83,7 @@ public class CoreServiceContext extends ServiceContext{
 		verbTracer.setObjectId(object);
 
 		// convert object to map object so as to save as json
-		Map<String,String> predicates = AuditConverter.beanToMap(predicate);		
+		Map<String,Object> predicates = AuditConverter.beanToMap(predicate);		
 		verbTracer.addPredicates(predicates);
 
 	}
@@ -97,7 +97,7 @@ public class CoreServiceContext extends ServiceContext{
 	@Override
 	public void addOperationPredicates(Object predicate){
 
-		Map<String,String> predicates = AuditConverter.beanToMap(predicate);
+		Map<String,Object> predicates = AuditConverter.beanToMap(predicate);
 		// set operation primary verb predicates
 		verbTracer.addPredicates(predicates);
 	}
