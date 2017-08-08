@@ -6,7 +6,6 @@ import java.util.ServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.gp.disruptor.EventDispatcher;
 import com.gp.exception.BaseException;
 import com.gp.launcher.CoreInitializer;
 import com.gp.launcher.Lifecycle;
