@@ -15,6 +15,7 @@ import com.gp.disruptor.EventHooker;
 import com.gp.disruptor.EventPayload;
 import com.gp.disruptor.EventType;
 import com.gp.exception.RingEventException;
+import com.gp.info.InfoId;
 
 /**
  * This hooker class digest all the core event which loaded with data.
@@ -78,10 +79,13 @@ public class CoreHooker extends EventHooker<CoreEventLoad>{
 		operaudit.setMessage(payload.getMessage());
 		operaudit.setAuditDate(new Date(payload.getTimestamp()));
 		operaudit.setElapseTime(payload.getElapsedTime());
-		
+		if(LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Operation : {} / User : {} / Elapse : {}", payload.getOperation(), payload.getOperator(), payload.getElapsedTime());
+		}
 		try {
 			// store data to database.
-			CoreFacade.auditOperation(operaudit);
+			InfoId<Long> auditId = CoreFacade.auditOperation(operaudit);
+			payload.setAutidId(auditId);
 		} catch (CoreException e) {
 			
 			LOGGER.error("Fail to persist audit to database.",e);

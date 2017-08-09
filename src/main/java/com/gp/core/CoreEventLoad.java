@@ -18,6 +18,8 @@ import java.util.Map;
  **/
 public class CoreEventLoad extends EventPayload{
 
+	private InfoId<Long> autidId;
+	
 	/** the object id */
 	private InfoId<?> objectId;
 
@@ -216,6 +218,14 @@ public class CoreEventLoad extends EventPayload{
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public InfoId<Long> getAutidId() {
+		return autidId;
+	}
+
+	public void setAutidId(InfoId<Long> autidId) {
+		this.autidId = autidId;
 	}
 
 }

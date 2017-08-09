@@ -59,10 +59,10 @@ public class CoreFacade {
 	 * @param auditlist the audit data of operation
 	 * 
 	 **/
-	public static void auditOperation(AuditInfo auditinfo) throws CoreException{
+	public static InfoId<Long> auditOperation(AuditInfo auditinfo) throws CoreException{
 		
 		if(null == auditinfo)
-			return;
+			return null;
 		
 		try {
 			ServiceContext svcctx = ServiceContext.getPseudoServiceContext();
@@ -71,7 +71,7 @@ public class CoreFacade {
 			auditinfo.setInfoId(auditId); 
 
 			auditservice.addAudit(svcctx, auditinfo);
-		
+			return auditId;
 		} catch (ServiceException e) {
 			throw new CoreException("fail to get admin principal",e );
 		}
