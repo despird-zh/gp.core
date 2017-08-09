@@ -1,7 +1,7 @@
 package com.gp.core;
 
-import com.gp.dao.info.OperLogInfo;
-import com.gp.svc.OperLogService;
+import com.gp.dao.info.OperationInfo;
+import com.gp.svc.OperationService;
 
 import java.util.Date;
 
@@ -40,11 +40,11 @@ public class CoreFacade {
 
 	private static CommonService idService;
 
-	private static OperLogService operlogservice;
+	private static OperationService operlogservice;
 
 	@Autowired
 	private CoreFacade(AuditService auditservice,
-					   OperLogService operlogservice,
+					   OperationService operlogservice,
 					   CommonService idService){
 		
 		CoreFacade.auditservice = auditservice;
@@ -77,30 +77,4 @@ public class CoreFacade {
 		}
 	}
 
-	/**
-	 * Handle the core event payload
-	 * @param  coreload the payload of event
-	 **/
-	public static void handleUpdateAccount(CoreEventLoad coreload)throws CoreException{
-
-		try {
-			ServiceContext svcctx = ServiceContext.getPseudoServiceContext();
-			OperLogInfo operinfo = new OperLogInfo();
-			InfoId<Long> operid = idService.generateId(IdKey.OPER_LOG, Long.class);
-			operinfo.setInfoId(operid);
-			operinfo.setAccount(coreload.getOperator());
-			operinfo.setOperation(coreload.getOperation());
-			
-			if(InfoId.isValid(coreload.getObjectId()))
-				operinfo.setObjectId(coreload.getObjectId().toString());
-			
-			operinfo.setOperationTime(new Date(coreload.getTimestamp()));
-			
-			svcctx.setTraceInfo(operinfo);
-			operlogservice.addOperLog(svcctx, operinfo);
-
-		}catch (ServiceException e) {
-			throw new CoreException("fail to handle the core event payload",e );
-		}
-	}
 }
