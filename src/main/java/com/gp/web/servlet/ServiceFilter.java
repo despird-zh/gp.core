@@ -27,6 +27,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.gp.common.AccessPoint;
 import com.gp.common.GroupUsers;
 import com.gp.common.IdKey;
+import com.gp.common.IdKeys;
 import com.gp.common.JwtPayload;
 import com.gp.common.Principal;
 import com.gp.common.SystemOptions;
@@ -157,7 +158,7 @@ public class ServiceFilter extends OncePerRequestFilter {
 			}else{
 
 				try{
-					InfoId<Long> tokenId = IdKey.TOKEN.getInfoId(NumberUtils.toLong(jwtPayload.getJwtId()));
+					InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.TOKEN, NumberUtils.toLong(jwtPayload.getJwtId()));
 					TokenInfo tokenInfo = SecurityFacade.findToken(accesspoint, tokenId);
 					// check if the token record exists
 					if(tokenInfo == null){

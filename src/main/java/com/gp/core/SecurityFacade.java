@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 import com.gp.common.AccessPoint;
 import com.gp.common.GeneralConstants;
 import com.gp.common.IdKey;
+import com.gp.common.IdKeys;
 import com.gp.common.JwtPayload;
 import com.gp.common.Operations;
 import com.gp.common.Principal;
@@ -645,7 +646,7 @@ public class SecurityFacade {
 			if(jwtid < 0){
 				throw new CoreException("excp.reissue.token");
 			}
-			InfoId<Long> tokenId = IdKey.TOKEN.getInfoId(jwtid);
+			InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.TOKEN,jwtid);
 			
 			TokenInfo tokenInfo = new TokenInfo();
 			
