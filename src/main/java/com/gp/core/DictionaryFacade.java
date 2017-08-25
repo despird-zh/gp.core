@@ -19,7 +19,7 @@ import com.gp.exception.CoreException;
 import com.gp.exception.ServiceException;
 import com.gp.dao.info.DictionaryInfo;
 import com.gp.info.InfoId;
-import com.gp.info.InfoIdHelper;
+import com.gp.info.InfoIds;
 import com.gp.svc.DictionaryService;
 import com.gp.validate.ValidateMessage;
 import com.gp.validate.ValidateUtils;
@@ -71,7 +71,7 @@ public class DictionaryFacade {
 	public static Boolean saveDictEntry(AccessPoint accesspoint,
 			Principal principal, DictionaryInfo dictinfo) throws CoreException{
 		
-		if(!InfoIdHelper.isValid(dictinfo.getInfoId())){
+		if(!InfoIds.isValid(dictinfo.getInfoId())){
 			CoreException cexcp = new CoreException(principal.getLocale(), "excp.save.dict");
 			cexcp.addValidateMessage("prop.dictid", "mesg.prop.miss");
 			throw cexcp;
