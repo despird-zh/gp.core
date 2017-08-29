@@ -26,7 +26,7 @@ import com.gp.common.IdKey;
 import com.gp.common.IdKeys;
 import com.gp.common.JwtPayload;
 import com.gp.common.Operations;
-import com.gp.common.Principal;
+import com.gp.common.GPrincipal;
 import com.gp.common.ServiceContext;
 import com.gp.common.SystemOptions;
 import com.gp.common.GroupUsers;
@@ -85,7 +85,7 @@ public class SecurityFacade {
 	}
 	
 	public static UserInfo findAccountLite(AccessPoint accesspoint, 
-			Principal principal,
+			GPrincipal principal,
 			InfoId<Long> userId,
 			String account, String type) throws CoreException{
 		
@@ -113,7 +113,7 @@ public class SecurityFacade {
 	 * @param account the account  
 	 **/
 	public static UserExtInfo findAccount(AccessPoint accesspoint, 
-			Principal principal,
+			GPrincipal principal,
 			InfoId<Long> userId,
 			String account, String type) throws CoreException{
 		
@@ -144,7 +144,7 @@ public class SecurityFacade {
 	 * @param pricapacity private cabinet capacity
 	 **/
 	public static boolean saveAccount(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			UserInfo uinfo, Long pubcapacity, Long pricapacity)throws CoreException{
 
 		Boolean result = false;
@@ -180,7 +180,7 @@ public class SecurityFacade {
 	 * @param pricapacity private cabinet capacity
 	 **/
 	public static InfoId<Long> newAccount(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			UserInfo uinfo, Long pubcapacity, Long pricapacity) throws CoreException{
 		
 		InfoId<Long> result = null;
@@ -235,7 +235,7 @@ public class SecurityFacade {
 	 * @param pricapacity private cabinet capacity
 	 **/
 	public static InfoId<Long> newAccountExt(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			UserInfo uinfo, String entity, String node) throws CoreException{
 		
 		InfoId<Long> result = null;
@@ -298,7 +298,7 @@ public class SecurityFacade {
 	 * @param type the type filter
 	 **/
 	public static List<UserExtInfo> findAccounts(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			String accountname, 
 			Integer instanceId, 
 			String[] types,
@@ -339,7 +339,7 @@ public class SecurityFacade {
 	 * @param type the type filter
 	 **/
 	public static PageWrapper<UserExtInfo> findAccounts(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			String accountname, 
 			Integer instanceId, 
 			String[] type, 
@@ -373,7 +373,7 @@ public class SecurityFacade {
 	 * authenticate the password
 	 **/
 	public static Boolean authenticate(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			String password)throws CoreException{
 		boolean pass = false;
 		try (ServiceContext svcctx = ContextHelper.beginServiceContext(principal, accesspoint,
@@ -403,7 +403,7 @@ public class SecurityFacade {
 	 * change the state of account
 	 **/
 	public static void changeAccountState(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			UserState state)throws CoreException{
 		
 		try (ServiceContext svcctx = ContextHelper.beginServiceContext(GroupUsers.PSEUDO_USER, accesspoint,
@@ -429,7 +429,7 @@ public class SecurityFacade {
 	 *
 	 **/
 	public static boolean removeAccount(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			InfoId<Long> userId, String account)throws CoreException{
 		
 		Boolean gresult = false;
@@ -456,7 +456,7 @@ public class SecurityFacade {
 	 * change the account password
 	 **/
 	public static Boolean changePassword(AccessPoint accesspoint,
-			Principal principal,
+			GPrincipal principal,
 			String account, 
 			String password)throws CoreException{
 		
@@ -487,7 +487,7 @@ public class SecurityFacade {
 	 *
 	 **/
 	public static List<UserLiteInfo> findAccountLites(AccessPoint accesspoint,
-												  Principal principal,
+												  GPrincipal principal,
 												  List<Long> userids,
 												  List<String> accounts)throws CoreException{
 
@@ -511,11 +511,11 @@ public class SecurityFacade {
 	/**
 	 * Find a principal from database 
 	 **/
-	public static Principal findPrincipal(AccessPoint accesspoint,
+	public static GPrincipal findPrincipal(AccessPoint accesspoint,
 			InfoId<Long> userId,
 			String account, String type) throws CoreException{
 		
-		Principal principal = null;
+		GPrincipal principal = null;
 		try (ServiceContext svcctx = ContextHelper.buildServiceContext(GroupUsers.PSEUDO_USER, accesspoint)){
 			UserInfo uinfo = null;
 			
@@ -526,7 +526,7 @@ public class SecurityFacade {
 			if(null == uinfo)
 				throw new CoreException("excp.find.account");
 			
-			principal = new Principal(uinfo.getInfoId());
+			principal = new GPrincipal(uinfo.getInfoId());
 			principal.setSourceId(uinfo.getSourceId());
 			principal.setAccount(account);
 	        principal.setEmail(uinfo.getEmail());
@@ -632,7 +632,7 @@ public class SecurityFacade {
 	 * @param payload the JWT payload
 	 * @return String the JWT token string 
 	 **/
-	public static String reissueToken(AccessPoint accesspoint,Principal principal, JwtPayload payload) 
+	public static String reissueToken(AccessPoint accesspoint,GPrincipal principal, JwtPayload payload) 
 			throws CoreException{
 		
 		String token = null;
@@ -679,7 +679,7 @@ public class SecurityFacade {
 	 * 
 	 * @param tokenId the id of token
 	 **/
-	public static boolean removeToken(AccessPoint accesspoint,Principal principal, InfoId<Long> tokenId) 
+	public static boolean removeToken(AccessPoint accesspoint,GPrincipal principal, InfoId<Long> tokenId) 
 			throws CoreException{
 		
 		try (ServiceContext svcctx = ContextHelper.buildServiceContext(principal, accesspoint)){

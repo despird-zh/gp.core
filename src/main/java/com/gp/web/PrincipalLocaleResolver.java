@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.i18n.AbstractLocaleResolver;
-import com.gp.common.Principal;
+import com.gp.common.GPrincipal;
 import com.gp.web.util.ExWebUtils;
 
 /**
@@ -21,7 +21,7 @@ public class PrincipalLocaleResolver extends AbstractLocaleResolver{
 	@Override
 	public Locale resolveLocale(HttpServletRequest request) {
 		
-		Principal principal = ExWebUtils.getPrincipal(request);
+		GPrincipal principal = ExWebUtils.getPrincipal(request);
 		if(null != principal){
 			setDefaultLocale(principal.getLocale());
 		}else{

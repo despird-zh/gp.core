@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import com.gp.common.GeneralContext.ExecState;
 import com.gp.common.AccessPoint;
 import com.gp.common.Operations;
-import com.gp.common.Principal;
+import com.gp.common.GPrincipal;
 import com.gp.common.ServiceContext;
 import com.gp.common.SystemOptions;
 import com.gp.exception.BaseException;
@@ -61,7 +61,7 @@ public class ContextHelper {
 	 * @param accesspoint the access point object
 	 * 
 	 **/
-	public static ServiceContext buildServiceContext(Principal principal, AccessPoint accesspoint){
+	public static ServiceContext buildServiceContext(GPrincipal principal, AccessPoint accesspoint){
 		
 		String audit = ConfigSettingUtils.getSystemOption(SystemOptions.AUDIT_ENABLE);
 		//GeneralConfig.getString(GeneralConstants.ENV_AUDIT_ENABLE);
@@ -93,7 +93,7 @@ public class ContextHelper {
 	 * @param operation the operation name
 	 * @param verb the verb name
 	 **/
-	public static ServiceContext beginServiceContext(Principal principal, AccessPoint accesspoint, String verb){
+	public static ServiceContext beginServiceContext(GPrincipal principal, AccessPoint accesspoint, String verb){
 		
 		ServiceContext svcctx = buildServiceContext(principal, accesspoint);
 		// if auditable then begin operation with blind object and predicates
@@ -111,7 +111,7 @@ public class ContextHelper {
 	 * @param operation the operation name
 	 * @param verb the verb name
 	 **/
-	public static ServiceContext beginServiceContext(Principal principal, AccessPoint accesspoint, Operations operation){
+	public static ServiceContext beginServiceContext(GPrincipal principal, AccessPoint accesspoint, Operations operation){
 		
 		ServiceContext svcctx = buildServiceContext(principal, accesspoint);
 		// if auditable then begin operation with blind object and predicates
@@ -126,7 +126,7 @@ public class ContextHelper {
 	 * @param principal the principal object
 	 * 
 	 **/
-	public static ServiceContext buildServiceContext(Principal principal){
+	public static ServiceContext buildServiceContext(GPrincipal principal){
 				
 		ServiceContext svcctx = new ServiceContext(principal);
 		

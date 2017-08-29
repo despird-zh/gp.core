@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.PropertyNamingStrategyBase;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.gp.common.AccessPoint;
-import com.gp.common.Principal;
+import com.gp.common.GPrincipal;
 import com.gp.exception.CoreException;
 import com.gp.validate.ValidateMessage;
 import com.gp.web.util.ExWebUtils;
@@ -248,7 +248,7 @@ public abstract class BaseController implements MessageSourceAware{
 	/**
 	 * Get the principal from the security context 
 	 **/
-	public Principal getPrincipal(){
+	public GPrincipal getPrincipal(){
 		
 		return ExWebUtils.getPrincipal(request);
 	}
@@ -261,7 +261,7 @@ public abstract class BaseController implements MessageSourceAware{
 	 **/
 	public String getMessage(String code, Object[] args){
 		
-		Principal principal = getPrincipal();
+		GPrincipal principal = getPrincipal();
 		Locale locale = (null == principal) ? Locale.getDefault() : principal.getLocale();
 		return messageSource.getMessage(code, args, locale);
 	}
@@ -272,7 +272,7 @@ public abstract class BaseController implements MessageSourceAware{
 	 * @param locale the locale 
 	 **/
 	public String getMessage(String code){
-		Principal principal = getPrincipal();
+		GPrincipal principal = getPrincipal();
 		Locale locale = (null == principal) ? Locale.getDefault() : principal.getLocale();
 		return messageSource.getMessage(code, new String[0], locale);
 	}

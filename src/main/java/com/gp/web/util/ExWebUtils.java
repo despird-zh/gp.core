@@ -29,7 +29,7 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.util.WebUtils;
 
 import com.gp.common.AccessPoint;
-import com.gp.common.Principal;
+import com.gp.common.GPrincipal;
 import com.gp.common.SystemOptions;
 import com.gp.util.ConfigSettingUtils;
 
@@ -363,7 +363,7 @@ public abstract class ExWebUtils extends WebUtils{
 	 * @param principal the user principal 
 	 * 
 	 **/
-	public static void setPrincipal(HttpServletRequest request, Principal principal){
+	public static void setPrincipal(HttpServletRequest request, GPrincipal principal){
 		
 		if(null == request) return;
 		
@@ -376,9 +376,9 @@ public abstract class ExWebUtils extends WebUtils{
 	 * @param request the request from client
 	 * 
 	 **/
-	public static Principal getPrincipal(HttpServletRequest request){
+	public static GPrincipal getPrincipal(HttpServletRequest request){
 		
-		return (Principal) request.getAttribute(REQ_ATTR_PRINCIPAL);
+		return (GPrincipal) request.getAttribute(REQ_ATTR_PRINCIPAL);
 	}
 	
 }

@@ -29,7 +29,7 @@ import com.gp.common.GroupUsers;
 import com.gp.common.IdKey;
 import com.gp.common.IdKeys;
 import com.gp.common.JwtPayload;
-import com.gp.common.Principal;
+import com.gp.common.GPrincipal;
 import com.gp.common.SystemOptions;
 import com.gp.core.MasterFacade;
 import com.gp.core.SecurityFacade;
@@ -46,9 +46,9 @@ import com.gp.web.util.ExWebUtils;
  * @author diaogc
  * @version 0.1 2016-10-20 
  **/
-public class ServiceFilter extends OncePerRequestFilter {
+public class ServiceTokenFilter extends OncePerRequestFilter {
 
-	Logger LOGGER = LoggerFactory.getLogger(ServiceFilter.class);
+	Logger LOGGER = LoggerFactory.getLogger(ServiceTokenFilter.class);
 	
 	public static final String AUTH_HEADER = "Authorization";
 	
@@ -56,17 +56,19 @@ public class ServiceFilter extends OncePerRequestFilter {
 	
 	public static final String FILTER_STATE = "_svc_filter_state";
 	
-	public static final String ACT_AUTH_TOKEN = "/authenticate.do";
-	public static final String ACT_BAD_TOKEN = "/bad-token.do";
-	public static final String ACT_TRAP_ALL = "/trap.do";
-	public static final String ACT_REISSUE_TOKEN = "/reissue.do";
+	public static final String ACT_AUTH_TOKEN = "/authenticate";
+	public static final String ACT_BAD_TOKEN = "/bad-token";
+	public static final String ACT_TRAP_ALL = "/trap";
+	public static final String ACT_REISSUE_TOKEN = "/reissue";
 	
 	/**
 	 * the patter will be /p1/p2, remember it will be applied to controller annotation.
 	 * so don't change it pattern 
 	 **/
 	public static final String FILTER_PREFIX = "/gpapi";
-		
+	
+	private UrlMatcher urlMatcher = null;
+	
 	/**
 	 * Define the state of request 
 	 * 
@@ -94,7 +96,7 @@ public class ServiceFilter extends OncePerRequestFilter {
 	 * to find the {@link CorsConfiguration} to use for each incoming request.
 	 * @see UrlBasedCorsConfigurationSource
 	 */
-	public ServiceFilter(CorsConfigurationSource configSource) {
+	public ServiceTokenFilter(CorsConfigurationSource configSource) {
 		Assert.notNull(configSource, "CorsConfigurationSource must not be null");
 		this.configSource = configSource;
 	}
@@ -109,6 +111,17 @@ public class ServiceFilter extends OncePerRequestFilter {
 		this.processor = processor;
 	}
 
+	public void setUrlMatcher(UrlMatcher urlMatcher) {
+		this.urlMatcher = urlMatcher;
+	}
+	
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		if(null == this.urlMatcher)
+			return false;
+		else 
+			return this.urlMatcher.match(request);
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -187,7 +200,7 @@ public class ServiceFilter extends OncePerRequestFilter {
 								// attach the state to request
 								request.setAttribute(FILTER_STATE, state);
 								// attach principal to request
-								Principal principal = SecurityFacade.findPrincipal(accesspoint, null, jwtPayload.getSubject(), null);
+								GPrincipal principal = SecurityFacade.findPrincipal(accesspoint, null, jwtPayload.getSubject(), null);
 								ExWebUtils.setPrincipal(httpRequest, principal);
 								// a valid token, continue the further process
 								filterChain.doFilter(request, response);
