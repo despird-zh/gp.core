@@ -48,7 +48,7 @@ import com.gp.web.util.ExWebUtils;
  **/
 public class ServiceTokenFilter extends OncePerRequestFilter {
 
-	Logger LOGGER = LoggerFactory.getLogger(ServiceTokenFilter.class);
+	static Logger LOGGER = LoggerFactory.getLogger(ServiceTokenFilter.class);
 	
 	public static final String AUTH_HEADER = "Authorization";
 	
