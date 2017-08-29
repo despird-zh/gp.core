@@ -118,9 +118,9 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 		if(null == this.urlMatcher)
-			return false;
+			return super.shouldNotFilter(request);
 		else 
-			return this.urlMatcher.match(request);
+			return !this.urlMatcher.match(request);
 	}
 
 	@Override
