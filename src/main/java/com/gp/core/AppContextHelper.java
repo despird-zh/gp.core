@@ -6,6 +6,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * Application Context Helper Class facilitate to get the bean manually.
+ * 
+ * @author gdiao
+ * @version 0.2 2016-1-12
+ **/
 public class AppContextHelper implements ApplicationContextAware {
 
 	Logger LOGGER = LoggerFactory.getLogger(AppContextHelper.class);
@@ -32,7 +38,7 @@ public class AppContextHelper implements ApplicationContextAware {
 	public static <T> T getSpringBean(Class<T> clazz){
 		
 		if(null == applicationContext) return null;
-		
+
 		return applicationContext.getBean(clazz);
 	}
 }
