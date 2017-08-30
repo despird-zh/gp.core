@@ -1,4 +1,4 @@
-package com.gp.web.service;
+package com.gp.web.api;
 
 import java.util.Date;
 import java.util.Map;
