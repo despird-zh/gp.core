@@ -50,6 +50,7 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 
 	static Logger LOGGER = LoggerFactory.getLogger(ServiceTokenFilter.class);
 	
+	public static final String TOKEN_PREFIX = "Bearer: ";
 	public static final String AUTH_HEADER = "Authorization";
 	
 	public static final String BLIND_TOKEN = "Bearer: __blind_token__";
@@ -161,7 +162,9 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 			state = AuthTokenState.NEED_AUTHC;
 
 		}else{
-			token = StringUtils.substringAfter(token, "Bearer: ");
+			if(StringUtils.startsWith(token, TOKEN_PREFIX)) {
+				token = StringUtils.substringAfter(token, TOKEN_PREFIX);
+			}
 			JwtPayload jwtPayload = JwtTokenUtils.parsePayload(token);
 			
 			if(null == jwtPayload){
