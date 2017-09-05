@@ -34,7 +34,6 @@ import com.gp.common.GroupUsers.UserState;
 import com.gp.exception.CoreException;
 import com.gp.exception.ServiceException;
 import com.gp.info.InfoId;
-import com.gp.info.InfoIds;
 import com.gp.dao.info.SourceInfo;
 import com.gp.dao.info.SysOptionInfo;
 import com.gp.dao.info.TokenInfo;
@@ -264,7 +263,7 @@ public class SecurityFacade {
 				throw coreexcp;
 			}
 			// amend the information key data
-			if(!InfoIds.isValid(uinfo.getInfoId())){
+			if(!IdKeys.isValidId(uinfo.getInfoId())){
 				
 				InfoId<Long> ukey = idservice.generateId( IdKey.USER, Long.class);
 				uinfo.setInfoId(ukey);

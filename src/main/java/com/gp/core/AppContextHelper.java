@@ -16,29 +16,49 @@ public class AppContextHelper implements ApplicationContextAware {
 
 	Logger LOGGER = LoggerFactory.getLogger(AppContextHelper.class);
 	
+	// the application context
 	private static ApplicationContext applicationContext;
 
+	/**
+	 * Set the application context 
+	 **/
 	public void setApplicationContext(ApplicationContext context) throws BeansException {
 		applicationContext = context;
 	}
 
+	/**
+	 * Get the application context 
+	 **/
 	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
 	
-	@SuppressWarnings("unchecked")
+	/**
+	 * Get the spring bean from context 
+	 **/
 	public static <T> T getSpringBean(String beanname, Class<T> clazz){
 		
 		if(null == applicationContext) return null;
 		
-		Object bean = applicationContext.getBean(beanname);
-		return (T) bean;
+		T bean = applicationContext.getBean(beanname, clazz);
+		return  bean;
 	}
 	
+	/**
+	 * Get the spring bean 
+	 * @param clazz the bean of class
+	 **/
 	public static <T> T getSpringBean(Class<T> clazz){
 		
 		if(null == applicationContext) return null;
 
 		return applicationContext.getBean(clazz);
+	}
+	
+	/**
+	 * Autowire the existing bean 
+	 **/
+	public static void autowireBean(Object existingBean) {
+		applicationContext.getAutowireCapableBeanFactory().autowireBean(existingBean);
 	}
 }

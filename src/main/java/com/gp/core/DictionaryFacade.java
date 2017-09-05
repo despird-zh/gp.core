@@ -14,12 +14,12 @@ import com.gp.common.AccessPoint;
 import com.gp.common.FlatColumns;
 import com.gp.common.Operations;
 import com.gp.common.GPrincipal;
+import com.gp.common.IdKeys;
 import com.gp.common.ServiceContext;
 import com.gp.exception.CoreException;
 import com.gp.exception.ServiceException;
 import com.gp.dao.info.DictionaryInfo;
 import com.gp.info.InfoId;
-import com.gp.info.InfoIds;
 import com.gp.svc.DictionaryService;
 import com.gp.validate.ValidateMessage;
 import com.gp.validate.ValidateUtils;
@@ -71,7 +71,7 @@ public class DictionaryFacade {
 	public static Boolean saveDictEntry(AccessPoint accesspoint,
 			GPrincipal principal, DictionaryInfo dictinfo) throws CoreException{
 		
-		if(!InfoIds.isValid(dictinfo.getInfoId())){
+		if(!IdKeys.isValidId(dictinfo.getInfoId())){
 			CoreException cexcp = new CoreException(principal.getLocale(), "excp.save.dict");
 			cexcp.addValidateMessage("prop.dictid", "mesg.prop.miss");
 			throw cexcp;
