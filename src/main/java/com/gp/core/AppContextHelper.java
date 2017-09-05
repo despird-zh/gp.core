@@ -59,6 +59,7 @@ public class AppContextHelper implements ApplicationContextAware {
 	 * Autowire the existing bean 
 	 **/
 	public static void autowireBean(Object existingBean) {
+
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(existingBean);
 	}
 }
