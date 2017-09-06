@@ -123,7 +123,7 @@ public class AuthenController extends BaseController{
 		
 		try{
 			Long jwtid = NumberUtils.toLong(jwtPayload.getJwtId());
-			InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.TOKEN,jwtid);
+			InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.GP_TOKENS,jwtid);
 			String mesg = super.getMessage("mesg.remove.token");
 			boolean done = SecurityFacade.removeToken(accesspoint, principal, tokenId);
 			

@@ -64,7 +64,7 @@ public class CoreFacade {
 		try {
 			ServiceContext svcctx = ServiceContext.getPseudoServiceContext();
 			// retrieve and set audit id
-			InfoId<Long> auditId = idService.generateId( IdKey.AUDIT, Long.class);
+			InfoId<Long> auditId = idService.generateId( IdKey.GP_AUDITS, Long.class);
 			auditinfo.setInfoId(auditId); 
 
 			auditservice.addAudit(svcctx, auditinfo);

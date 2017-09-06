@@ -174,7 +174,7 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 			}else{
 
 				try{
-					InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.TOKEN, NumberUtils.toLong(jwtPayload.getJwtId()));
+					InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.GP_TOKENS, NumberUtils.toLong(jwtPayload.getJwtId()));
 					TokenInfo tokenInfo = SecurityFacade.findToken(accesspoint, tokenId);
 					// check if the token record exists
 					if(tokenInfo == null){

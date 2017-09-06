@@ -204,7 +204,7 @@ public class SecurityFacade {
 			// amend the information key data
 			if(uinfo.getInfoId() == null){
 				
-				InfoId<Long> ukey = idservice.generateId( IdKey.USER, Long.class);
+				InfoId<Long> ukey = idservice.generateId( IdKey.GP_USERS, Long.class);
 				uinfo.setInfoId(ukey);
 			}
 			
@@ -265,7 +265,7 @@ public class SecurityFacade {
 			// amend the information key data
 			if(!IdKeys.isValidId(uinfo.getInfoId())){
 				
-				InfoId<Long> ukey = idservice.generateId( IdKey.USER, Long.class);
+				InfoId<Long> ukey = idservice.generateId( IdKey.GP_USERS, Long.class);
 				uinfo.setInfoId(ukey);
 				
 			}
@@ -594,7 +594,7 @@ public class SecurityFacade {
 			
 			SysOptionInfo option = systemservice.getOption(svcctx, SystemOptions.SECURITY_JWT_SECRET);
 
-			InfoId<Long> tokenId = idservice.generateId(IdKey.TOKEN, Long.class);
+			InfoId<Long> tokenId = idservice.generateId(IdKey.GP_TOKENS, Long.class);
 			TokenInfo tokenInfo = new TokenInfo();
 			
 			tokenInfo.setInfoId(tokenId);
@@ -645,7 +645,7 @@ public class SecurityFacade {
 			if(jwtid < 0){
 				throw new CoreException("excp.reissue.token");
 			}
-			InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.TOKEN,jwtid);
+			InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.GP_TOKENS,jwtid);
 			
 			TokenInfo tokenInfo = new TokenInfo();
 			
