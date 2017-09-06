@@ -25,7 +25,7 @@ public class CoreServiceContext extends ServiceContext{
 	static Logger LOGGER = LoggerFactory.getLogger(CoreServiceContext.class);
 	
 	// AuditState
-	private ExecState execstate = ExecState.UNKNOWN;
+	private ExecState execState = ExecState.UNKNOWN;
 	
 	// Audit verb tracker 
 	private AuditTracer verbTracer = null;
@@ -105,14 +105,14 @@ public class CoreServiceContext extends ServiceContext{
 	 * @param message the message
 	 **/
 	@Override
-	public void endOperation(ExecState state, String message){
+	public void endOperation(ExecState execState, String message){
 
 		// already be set to other non-success state, don't change it to success.
-		if(execstate != ExecState.UNKNOWN && state == ExecState.SUCCESS)
+		if(execState != ExecState.UNKNOWN && execState == ExecState.SUCCESS)
 			return ;
 		
 		verbTracer.setElapsedTime();
-		execstate = state;
+		this.execState = execState;
 		this.message = message;
 
 	}
@@ -129,7 +129,7 @@ public class CoreServiceContext extends ServiceContext{
 			coreEvent.setAccessPoint(this.accessPoint);
 			coreEvent.setOperation(verbTracer.getVerb());
 			coreEvent.setObjectId(verbTracer.getObjectId());
-			coreEvent.setState(this.execstate.name());
+			coreEvent.setState(this.execState.name());
 			coreEvent.setOperator(this.getPrincipal().getAccount());
 			coreEvent.setTimestamp(verbTracer.getTimestamp());
 			coreEvent.setElapsedTime(verbTracer.getElapsedTime());
