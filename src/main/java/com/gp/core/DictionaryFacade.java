@@ -19,7 +19,6 @@ import com.gp.common.ServiceContext;
 import com.gp.exception.CoreException;
 import com.gp.exception.ServiceException;
 import com.gp.dao.info.DictionaryInfo;
-import com.gp.info.InfoId;
 import com.gp.svc.DictionaryService;
 import com.gp.validate.ValidateMessage;
 import com.gp.validate.ValidateUtils;
