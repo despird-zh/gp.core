@@ -17,9 +17,15 @@ import com.gp.exception.RingEventException;
 import com.gp.info.InfoId;
 import com.lmax.disruptor.EventHandler;
 
-public class CoreHandler implements EventHandler<RingEvent>{
+/**
+ * The core audit handler cover the audit persistence operation 
+ * @author gdiao
+ * @version 0.1 2016-10-21
+ * 
+ **/
+public class CoreAuditHandler implements EventHandler<RingEvent>{
 	
-	static Logger LOGGER = LoggerFactory.getLogger(CoreHandler.class);
+	static Logger LOGGER = LoggerFactory.getLogger(CoreAuditHandler.class);
 	
 	@Override
 	public void onEvent(RingEvent event, long sequence, boolean endOfBatch) throws Exception {
