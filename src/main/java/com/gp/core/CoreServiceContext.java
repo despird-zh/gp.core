@@ -105,14 +105,14 @@ public class CoreServiceContext extends ServiceContext{
 	 * @param message the message
 	 **/
 	@Override
-	public void endOperation(ExecState execState, String message){
+	public void endOperation(ExecState state, String message){
 
 		// already be set to other non-success state, don't change it to success.
-		if(execState != ExecState.UNKNOWN && execState == ExecState.SUCCESS)
+		if(execState != ExecState.UNKNOWN && state == ExecState.SUCCESS)
 			return ;
 		
 		verbTracer.setElapsedTime();
-		this.execState = execState;
+		execState = state;
 		this.message = message;
 
 	}

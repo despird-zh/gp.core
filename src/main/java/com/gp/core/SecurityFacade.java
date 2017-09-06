@@ -540,7 +540,7 @@ public class SecurityFacade {
 	        principal.setLocale(locale);
 	         
 	 		principal.setTimeZone(ZoneId.of(uinfo.getTimezone()));
-	 		
+
 		} catch (ServiceException e) {
 			
 			ContextHelper.stampContext(e, "excp.find.account");
