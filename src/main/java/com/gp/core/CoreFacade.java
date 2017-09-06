@@ -1,14 +1,11 @@
 package com.gp.core;
 
-import com.gp.svc.OperationService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gp.common.IdKey;
-import com.gp.common.ServiceContext;
 import com.gp.exception.CoreException;
 import com.gp.exception.ServiceException;
 import com.gp.dao.info.AuditInfo;
@@ -37,16 +34,12 @@ public class CoreFacade {
 
 	private static CommonService idService;
 
-	private static OperationService operlogservice;
-
 	@Autowired
 	private CoreFacade(AuditService auditservice,
-					   OperationService operlogservice,
 					   CommonService idService){
 		
 		CoreFacade.auditservice = auditservice;
 		CoreFacade.idService = idService;
-		CoreFacade.operlogservice = operlogservice;
 	}
 	
 	/**
@@ -62,15 +55,14 @@ public class CoreFacade {
 			return null;
 		
 		try {
-			ServiceContext svcctx = ServiceContext.getPseudoServiceContext();
 			// retrieve and set audit id
 			InfoId<Long> auditId = idService.generateId( IdKey.GP_AUDITS, Long.class);
 			auditinfo.setInfoId(auditId); 
 
-			auditservice.addAudit(svcctx, auditinfo);
+			auditservice.addAudit( auditinfo);
 			return auditId;
 		} catch (ServiceException e) {
-			throw new CoreException("fail to get admin principal",e );
+			throw new CoreException("Fail to persist audit log.",e );
 		}
 	}
 
