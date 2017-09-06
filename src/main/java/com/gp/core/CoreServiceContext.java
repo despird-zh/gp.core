@@ -24,26 +24,16 @@ public class CoreServiceContext extends ServiceContext{
 	
 	static Logger LOGGER = LoggerFactory.getLogger(CoreServiceContext.class);
 	
-	/**
-	 * audit data holder 
-	 **/
-	//private CoreEventLoad coreload = null;
-
-	/**
-	 * AuditState
-	 **/
+	// AuditState
 	private ExecState execstate = ExecState.UNKNOWN;
 	
-	/**
-	 * Audit verb tracker 
-	 **/
+	// Audit verb tracker 
 	private AuditTracer verbTracer = null;
 	
-	/**
-	 * The access point 
-	 **/
+	// The access point 
 	private AccessPoint accessPoint = null;
 	
+	// the message of execution
 	private String message;
 	
 	/**
@@ -142,6 +132,7 @@ public class CoreServiceContext extends ServiceContext{
 			coreEvent.setState(this.execstate.name());
 			coreEvent.setOperator(this.getPrincipal().getAccount());
 			coreEvent.setTimestamp(verbTracer.getTimestamp());
+			coreEvent.setElapsedTime(verbTracer.getElapsedTime());
 			coreEvent.addPredicates(verbTracer.getPredicates());
 			
 			return (A)coreEvent;
