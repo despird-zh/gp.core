@@ -82,7 +82,7 @@ public class CoreAuditHandler implements EventHandler<RingEvent>{
 		}
 		try {
 			// store data to database.
-			InfoId<Long> auditId = CoreFacade.auditOperation(operaudit);
+			InfoId<Long> auditId = CoreFacade.persistAudit(operaudit);
 			payload.setAutidId(auditId);
 		} catch (CoreException e) {
 			

@@ -56,7 +56,7 @@ public class CoreFacade {
 	 * @param auditlist the audit data of operation
 	 * 
 	 **/
-	public static InfoId<Long> auditOperation(AuditInfo auditinfo) throws CoreException{
+	public static InfoId<Long> persistAudit(AuditInfo auditinfo) throws CoreException{
 		
 		if(null == auditinfo)
 			return null;
