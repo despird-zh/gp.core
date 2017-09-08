@@ -3,7 +3,6 @@ package com.gp.web;
 import java.util.HashMap;
 import java.util.Map;
 import com.gp.core.CoreConstants;
-
 /**
  * ActionResult Wrap the result of JSON data.
  * 
@@ -61,11 +60,11 @@ public class ActionResult{
 	 * @param message the message string
 	 * @return ActionResult the action result
 	 **/
-    public static ActionResult invalid(String message, Map<String, String> msgmap) {
+    public static ActionResult invalid(String message, Map<String, String> msgMap) {
     	ActionResult ref = new ActionResult();
         ref.meta = new Meta(CoreConstants.FAIL, message);
         ref.meta.setCode(CoreConstants.CODE_INVALID);
-        ref.setData(msgmap);
+        ref.setData(msgMap);
         
         return ref;
     }

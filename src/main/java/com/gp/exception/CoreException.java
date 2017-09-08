@@ -94,43 +94,43 @@ public class CoreException extends BaseException{
      **/
     public void addValidateMessages(Set<ValidateMessage> messageSet){
     	
-    	// Translate property name as per locale.
-    	for(ValidateMessage message : messageSet){
-    		String prop = getPropertyName(this.locale, message.getProperty());
-    		message.setProperty(prop);
-    	}
-    	
-    	if(null == this.messageSet){
-    		this.messageSet = messageSet;
-    	}else{
-    		this.messageSet.addAll(messageSet);
-    	}
+	    	// Translate property name as per locale.
+	    	for(ValidateMessage message : messageSet){
+	    		String prop = getPropertyName(this.locale, message.getProperty());
+	    		message.setProperty(prop);
+	    	}
+	    	
+	    	if(null == this.messageSet){
+	    		this.messageSet = messageSet;
+	    	}else{
+	    		this.messageSet.addAll(messageSet);
+	    	}
     }
     
     /**
      * Add validate message with property key and message key
      **/
     public void addValidateMessage(String propkey, String messagekey){
-    	String prop = getPropertyName(this.locale, propkey);
-    	String msg = getMessagePattern(this.locale, messagekey);
-    	
-    	if(null == this.messageSet){
-    		this.messageSet = new HashSet<ValidateMessage>();
-    	}
-    	this.messageSet.add(new ValidateMessage(prop, msg));
+	    	String prop = getPropertyName(this.locale, propkey);
+	    	String msg = getMessagePattern(this.locale, messagekey);
+	    	
+	    	if(null == this.messageSet){
+	    		this.messageSet = new HashSet<ValidateMessage>();
+	    	}
+	    	this.messageSet.add(new ValidateMessage(prop, msg));
     }
     
     /**
      * Add validate message with property key and message key
      **/
     public void addValidateMessage(ValidateMessage vmesg){
-    	
-    	String prop = getMessagePattern(this.locale, vmesg.getProperty());
-    	vmesg.setProperty(prop);
-    	if(null == this.messageSet){
-    		this.messageSet = new HashSet<ValidateMessage>();
-    	}
-    	this.messageSet.add(vmesg);
+	    	
+	    	String prop = getMessagePattern(this.locale, vmesg.getProperty());
+	    	vmesg.setProperty(prop);
+	    	if(null == this.messageSet){
+	    		this.messageSet = new HashSet<ValidateMessage>();
+	    	}
+	    	this.messageSet.add(vmesg);
     }
 
 	/**
@@ -138,6 +138,6 @@ public class CoreException extends BaseException{
 	 **/
     public Set<ValidateMessage> getValidateMessages(){
     	
-    	return this.messageSet;
+    		return this.messageSet;
     }
 }
