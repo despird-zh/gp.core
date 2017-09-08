@@ -31,9 +31,9 @@ import com.gp.web.servlet.ServiceTokenFilter.AuthTokenState;
 
 @Controller
 @RequestMapping(ServiceTokenFilter.FILTER_PREFIX)
-public class AuthenController extends BaseController{
+public class AuthenAPIController extends BaseController{
 
-	static Logger LOGGER = LoggerFactory.getLogger(AuthenController.class);
+	static Logger LOGGER = LoggerFactory.getLogger(AuthenAPIController.class);
 	
 	@RequestMapping(
 		    value = "authenticate", 

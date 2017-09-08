@@ -13,9 +13,9 @@ import com.gp.web.servlet.ServiceTokenFilter.AuthTokenState;
 
 @Controller
 @RequestMapping(ServiceTokenFilter.FILTER_PREFIX)
-public class TrapAllController extends BaseController{
+public class TrapAllAPIController extends BaseController{
 	
-	static Logger LOGGER = LoggerFactory.getLogger(TrapAllController.class);
+	static Logger LOGGER = LoggerFactory.getLogger(TrapAllAPIController.class);
 	
 	/**
 	 * trap all the illegal process 
