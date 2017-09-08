@@ -150,17 +150,18 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
 		if(LOGGER.isDebugEnabled()){
 			ExWebUtils.dumpRequestAttributes(httpRequest);
-			LOGGER.debug("Filter URL:{}", request.getRequestURI());
+			LOGGER.debug("service filtering url:{}", request.getRequestURI());
 		}
 		String token = httpRequest.getHeader(AUTH_HEADER);
 		AuthTokenState state = AuthTokenState.UNKNOWN;
 
 		AccessPoint accesspoint = ExWebUtils.getAccessPoint(httpRequest);
 		if(StringUtils.isBlank(token) || StringUtils.equalsIgnoreCase(BLIND_TOKEN, token)){
-
-			// don't have token, forward request to authenticate it
-			state = AuthTokenState.NEED_AUTHC;
-
+			if(request.getRequestURI().startsWith(FILTER_PREFIX + ACT_AUTH_TOKEN)){
+	
+				// no token but request to : authenticate, then forward it
+				state = AuthTokenState.NEED_AUTHC;
+			}
 		}else{
 			if(StringUtils.startsWith(token, TOKEN_PREFIX)) {
 				token = StringUtils.substringAfter(token, TOKEN_PREFIX);
@@ -228,6 +229,10 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 
 	/**
 	 * forward the request as per the state of request and token
+	 * 
+	 * @author gary diao update RequestDispatcher issue.
+	 * 
+	 * 
 	 * @param request
 	 * @param response
 	 * @param state 
@@ -236,27 +241,30 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 	private void forward(ServletRequest request, ServletResponse response, AuthTokenState state){
 		RequestDispatcher dispatcher = null;
 		
-		FilterConfig filterConfig = this.getFilterConfig();
-		
+		/**
+		 * Following codes not work in case of couple with Spring Security !!!
+		 * FilterConfig filterConfig = this.getFilterConfig();
+		 * filterConfig.getServletContext().getRequestDispatcher(FILTER_PREFIX + ACT_REISSUE_TOKEN);
+		 **/
 		try {
 			if(AuthTokenState.NEED_AUTHC == state){
 			
-				dispatcher = filterConfig.getServletContext().getRequestDispatcher(FILTER_PREFIX + ACT_AUTH_TOKEN);
+				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_AUTH_TOKEN);
 			
 			}else if(AuthTokenState.BAD_TOKEN == state ||
 					AuthTokenState.GHOST_TOKEN == state ||
 					AuthTokenState.INVALID_TOKEN == state ||
 					AuthTokenState.EXPIRE_TOKEN == state){
 			
-				dispatcher = filterConfig.getServletContext().getRequestDispatcher(FILTER_PREFIX + ACT_BAD_TOKEN);
+				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_BAD_TOKEN);
 			
 			}else if(AuthTokenState.REISSUE_TOKEN == state){
 				
-				dispatcher = filterConfig.getServletContext().getRequestDispatcher(FILTER_PREFIX + ACT_REISSUE_TOKEN);
+				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_REISSUE_TOKEN);
 			}
 			else{
 				
-				dispatcher = filterConfig.getServletContext().getRequestDispatcher(FILTER_PREFIX + ACT_TRAP_ALL);
+				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_TRAP_ALL);
 			}
 			
 			dispatcher.forward(request, response);

@@ -27,7 +27,7 @@ public class TrapAllController extends BaseController{
 		ActionResult result = null;
 		
 		result = ActionResult.failure(this.getMessage("excp.invalid.token"));
-		result.getMeta().setCode(AuthTokenState.VALID_TOKEN.name());
+		result.getMeta().setCode(AuthTokenState.INVALID_TOKEN.name());
 		
 		return mav.addAllObjects(result.asMap());
 	}
