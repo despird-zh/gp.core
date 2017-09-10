@@ -2,6 +2,7 @@ package com.gp.web;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -174,7 +175,7 @@ public abstract class BaseController implements MessageSourceAware{
 		} catch (IOException e) {
 			LOGGER.debug("fail read the json data from request body", e);
 		}
-		return null;
+		return Collections.emptyMap();
 	}
 	
 	/**
