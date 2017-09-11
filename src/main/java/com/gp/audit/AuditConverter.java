@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gp.util.CommonUtils;
 
 /**
  * this class helps to convert AuditData object between json, as for different 
@@ -25,8 +26,6 @@ public class AuditConverter {
 	
 	static JsonFactory jsonFactory = new JsonFactory();
 
-	static ObjectMapper OBJ_MAPPER = new ObjectMapper();
-
 	/**
 	 * Convert the object into a map 
 	 **/
@@ -36,7 +35,7 @@ public class AuditConverter {
             return null;  
         }   
 		
-		Map<String, Object> fieldMap = OBJ_MAPPER.convertValue(beanObj, new TypeReference<Map<String, Object>>(){});
+		Map<String, Object> fieldMap = CommonUtils.JSON_MAPPER.convertValue(beanObj, new TypeReference<Map<String, Object>>(){});
 		  
         return fieldMap;  
 	}
@@ -49,6 +48,6 @@ public class AuditConverter {
 		if(predicates == null)
 			return "{}";
 		
-		return OBJ_MAPPER.writeValueAsString(predicates);
+		return CommonUtils.JSON_MAPPER.writeValueAsString(predicates);
 	}
 }
