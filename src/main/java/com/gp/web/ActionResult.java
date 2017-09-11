@@ -25,7 +25,7 @@ public class ActionResult{
 	 * @return ActionResult the action result
 	 **/
     public static ActionResult failure(String message) {
-    	ActionResult ref = new ActionResult();
+    		ActionResult ref = new ActionResult();
         ref.meta = new Meta(CoreConstants.FAIL, message);
         return ref;
     }
@@ -61,7 +61,7 @@ public class ActionResult{
 	 * @return ActionResult the action result
 	 **/
     public static ActionResult invalid(String message, Map<String, String> msgMap) {
-    	ActionResult ref = new ActionResult();
+    		ActionResult ref = new ActionResult();
         ref.meta = new Meta(CoreConstants.FAIL, message);
         ref.meta.setCode(CoreConstants.CODE_INVALID);
         ref.setData(msgMap);
