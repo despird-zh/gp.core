@@ -3,6 +3,8 @@ package com.gp.audit;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.StopWatch;
+
 import com.gp.info.InfoId;
 
 /**
@@ -14,9 +16,9 @@ public class AuditTracer {
 	
 	/** the time stamp */
 	private Long timestamp;	
-	/** operation time consuming */
-	private Long elapse = 0L;	
 
+	StopWatch stopWatch = new StopWatch();
+	
 	/** the verb */
 	private String verb = null;
 	/** the target data EntryKey */
@@ -29,6 +31,7 @@ public class AuditTracer {
 	 **/
 	public AuditTracer(){
 		this.timestamp = System.currentTimeMillis();
+		stopWatch.start();
 		predicateMap = new HashMap<String, Object>();
 	}
 	
@@ -38,6 +41,7 @@ public class AuditTracer {
 	public AuditTracer(String verb){
 		this.verb = verb;
 		this.timestamp = System.currentTimeMillis();
+		stopWatch.start();
 		predicateMap = new HashMap<String, Object>();
 	}
 
@@ -83,7 +87,7 @@ public class AuditTracer {
 	 **/
 	public long getElapsedTime(){
 
-		return elapse;
+		return this.stopWatch.getTotalTimeMillis();
 
 	}
 	
@@ -91,17 +95,8 @@ public class AuditTracer {
 	 * Set the elapse time, use the current time as end point.
 	 **/
 	public void setElapsedTime(){
-		
-		long currTimestamp = System.currentTimeMillis();
-		this.elapse = currTimestamp - this.timestamp;
-	}
-	
-	/**
-	 * Set the elapse time 
-	 **/
-	public void setElapsedTime(Long elapse){
-		
-		this.elapse = elapse;
+
+		stopWatch.stop();
 	}
 
 	/**
@@ -112,14 +107,6 @@ public class AuditTracer {
 		return this.timestamp;
 	}
 	
-	/**
-	 * Set time stamp 
-	 **/
-	public void setTimestamp(Long timestamp){
-		
-		this.timestamp = timestamp;
-	}
-
 	/**
 	 * Add predicate to map 
 	 **/

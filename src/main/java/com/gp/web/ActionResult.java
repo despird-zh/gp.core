@@ -2,6 +2,9 @@ package com.gp.web;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.codec.binary.StringUtils;
+
 import com.gp.core.CoreConstants;
 /**
  * ActionResult Wrap the result of JSON data.
@@ -98,6 +101,30 @@ public class ActionResult{
 		this.data = data;
 	}	
 	
+	/**
+	 * Check the result is success or not
+	 **/
+	public boolean isSuccess() {
+		
+		return StringUtils.equals(CoreConstants.SUCCESS, this.meta.state);
+	}
+	
+	/**
+	 * Check the result is fail or not
+	 **/
+	public boolean isFailure() {
+			
+		return StringUtils.equals(CoreConstants.FAIL, this.meta.state);
+	}
+	
+	/**
+	 * Check the result is error or not
+	 **/
+	public boolean isError() {
+		
+		return StringUtils.equals(CoreConstants.ERROR, this.meta.state);
+	}
+
 	/**
 	 * Convert the action result into a map, it to be easy to append to ModelAndView
 	 **/

@@ -29,6 +29,43 @@ import com.gp.web.BaseController;
 import com.gp.web.servlet.ServiceTokenFilter;
 import com.gp.web.servlet.ServiceTokenFilter.AuthTokenState;
 
+/**
+ * All authenticate request
+ * the result of authenticate could be:
+ * <pre>
+ * {
+ *    meta: {
+ *	    state: success,
+ * 	    code: VALID_TOKEN 
+ * 	  },
+ *    data: ""
+ * } 
+ * {
+ *    meta: {
+ *	    state: failure / error,
+ * 	    code: FAIL_AUTHC 
+ * 	  },
+ *    data: ""
+ * } 
+ * </pre>
+ * the result of reissue could be:
+ * <pre>
+ * {
+ *    meta: {
+ *	    state: success,
+ * 	    code: REISSUE_TOKEN 
+ * 	  },
+ *    data: ""
+ * } 
+ * {
+ *    meta: {
+ *	    state: error,
+ * 	    code: FAIL_AUTHC 
+ * 	  },
+ *    data: ""
+ * } 
+ * </pre>
+ **/
 @Controller
 @RequestMapping(ServiceTokenFilter.FILTER_PREFIX)
 public class AuthenAPIController extends BaseController{
@@ -83,7 +120,9 @@ public class AuthenAPIController extends BaseController{
 		ModelAndView mav = super.getJsonModelView();
 		ActionResult result = null;
 		String token = request.getHeader(ServiceTokenFilter.AUTH_HEADER);
-		token = StringUtils.substringAfter(token, "Bearer: ");
+		if(StringUtils.startsWith(token, "Bearer: "))
+			token = StringUtils.substringAfter(token, "Bearer: ");
+		
 		JwtPayload jwtPayload = JwtTokenUtils.parsePayload(token);
 	
 		jwtPayload.setNotBefore(DateTimeUtils.now());

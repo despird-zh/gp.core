@@ -58,6 +58,7 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 	
 	public static final String ACT_AUTH_TOKEN = "/authenticate";
 	public static final String ACT_BAD_TOKEN = "/bad-token";
+	public static final String ACT_EXPIRE_TOKEN = "/expired-token";
 	public static final String ACT_TRAP_ALL = "/trap";
 	public static final String ACT_REISSUE_TOKEN = "/reissue";
 	
@@ -252,11 +253,13 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 			
 			}else if(AuthTokenState.BAD_TOKEN == state ||
 					AuthTokenState.GHOST_TOKEN == state ||
-					AuthTokenState.INVALID_TOKEN == state ||
-					AuthTokenState.EXPIRE_TOKEN == state){
+					AuthTokenState.INVALID_TOKEN == state){
 			
 				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_BAD_TOKEN);
 			
+			}else if(AuthTokenState.EXPIRE_TOKEN == state){
+				
+				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_EXPIRE_TOKEN);
 			}else if(AuthTokenState.REISSUE_TOKEN == state){
 				
 				dispatcher = request.getRequestDispatcher(FILTER_PREFIX + ACT_REISSUE_TOKEN);
