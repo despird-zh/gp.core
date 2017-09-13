@@ -43,8 +43,7 @@ public class ConfigUtils {
 		
 		if(StringUtils.isBlank(value)){
 			try {
-				AccessPoint accesspoint = new AccessPoint("_blind","_blind");
-				SysOptionInfo soi = CoreEngine.getCoreFacade().findSystemOption(accesspoint, GroupUsers.PSEUDO_USER, key);
+				SysOptionInfo soi = CoreEngine.getCoreFacade().findSystemOption(GroupUsers.PSEUDO_USER, key);
 				
 				value = soi != null ? soi.getOptionValue() : null;
 			

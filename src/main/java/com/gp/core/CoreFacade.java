@@ -41,7 +41,7 @@ public interface CoreFacade {
 	/**
 	 * find the system options by group key 
 	 **/
-	SysOptionInfo findSystemOption(AccessPoint accesspoint,
+	SysOptionInfo findSystemOption(
 				GPrincipal principal,
 				String optionKey)throws CoreException;
 	

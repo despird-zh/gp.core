@@ -181,7 +181,7 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 						// not find any token in db
 						state = AuthTokenState.GHOST_TOKEN;
 					}else{
-						SysOptionInfo secret = CoreEngine.getCoreFacade().findSystemOption(accesspoint, GroupUsers.PSEUDO_USER, SystemOptions.SECURITY_JWT_SECRET);
+						SysOptionInfo secret = CoreEngine.getCoreFacade().findSystemOption(GroupUsers.PSEUDO_USER, SystemOptions.SECURITY_JWT_SECRET);
 						
 						if(!StringUtils.equals(tokenInfo.getJwtToken(), token)){
 							
