@@ -5,6 +5,7 @@ import java.util.ServiceLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import com.gp.exception.BaseException;
 import com.gp.launcher.CoreInitializer;
@@ -30,6 +31,8 @@ public class CoreEngine{
 	
 	private static CoreDelegator coreDelegator;
 	
+	private static CoreFacade coreFacade;
+	
 	// auto fire CoreDelegator initialization.
 	static{
 		new CoreEngine();
@@ -48,11 +51,20 @@ public class CoreEngine{
 	}
 	
 	/**
+	 * Get the core facade support delegate for methods required for core package 
+	 **/
+	public static CoreFacade getCoreFacade() {
+		Assert.notNull(coreFacade, "the core facade must not be null.");
+		return coreFacade;
+	}
+	
+	/**
 	 * Initial the core, during initial phase necessary resource and classes are loaded
 	 * so some LifecycleListener will be registered in CoreDelegator instance.
 	 **/
-	public static void initial() throws BaseException{
+	public static void initial(CoreFacade _coreFacade) throws BaseException{
 		
+		coreFacade = _coreFacade;
 		coreDelegator.initial();
 	}
 	

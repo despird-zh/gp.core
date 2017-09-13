@@ -9,7 +9,7 @@ import org.springframework.context.support.AbstractMessageSource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 
-import com.gp.core.DictionaryFacade;
+import com.gp.core.CoreEngine;
 
 public class DatabaseMessageSource extends AbstractMessageSource implements ResourceLoaderAware{
 
@@ -24,7 +24,7 @@ public class DatabaseMessageSource extends AbstractMessageSource implements Reso
 	@Override
 	protected MessageFormat resolveCode(String code, Locale locale) {
 
-		String messagePattern = DictionaryFacade.findMessagePattern(locale, code);
+		String messagePattern = CoreEngine.getCoreFacade().findMessagePattern(locale, code);
 		messagePattern = StringUtils.isBlank(messagePattern) ? code : messagePattern;
 		
 		MessageFormat result = createMessageFormat(messagePattern, locale);

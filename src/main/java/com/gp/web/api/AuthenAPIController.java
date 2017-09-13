@@ -19,7 +19,7 @@ import com.gp.common.IdKey;
 import com.gp.common.IdKeys;
 import com.gp.common.JwtPayload;
 import com.gp.common.GPrincipal;
-import com.gp.core.SecurityFacade;
+import com.gp.core.CoreEngine;
 import com.gp.exception.CoreException;
 import com.gp.info.InfoId;
 import com.gp.util.DateTimeUtils;
@@ -131,7 +131,7 @@ public class AuthenAPIController extends BaseController{
 		
 		try{
 			String mesg = super.getMessage("mesg.reissue.token");
-			String newtoken = SecurityFacade.reissueToken(accesspoint, principal, jwtPayload);
+			String newtoken = CoreEngine.getCoreFacade().reissueToken(accesspoint, principal, jwtPayload);
 			result = ActionResult.success(mesg);
 			result.setData(newtoken);
 			result.getMeta().setCode(AuthTokenState.REISSUE_TOKEN.name());
@@ -164,7 +164,7 @@ public class AuthenAPIController extends BaseController{
 			Long jwtid = NumberUtils.toLong(jwtPayload.getJwtId());
 			InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.GP_TOKENS,jwtid);
 			String mesg = super.getMessage("mesg.remove.token");
-			boolean done = SecurityFacade.removeToken(accesspoint, principal, tokenId);
+			boolean done = CoreEngine.getCoreFacade().removeToken(accesspoint, principal, tokenId);
 			
 			result = done? ActionResult.success(mesg) : ActionResult.failure(getMessage("excp.remove.token"));
 
@@ -187,14 +187,14 @@ public class AuthenAPIController extends BaseController{
 				result = ActionResult.failure(mesg);
 			}
 			
-			GPrincipal principal = SecurityFacade.findPrincipal(accesspoint, null, account, null);
+			GPrincipal principal = CoreEngine.getCoreFacade().findPrincipal(accesspoint, null, account, null);
 			if(null == principal){
 				String mesg = super.getMessage("excp.no.principal");
 				result = ActionResult.failure(mesg);
 				
 			}else{
 				// authenticate the subject & credential
-				boolean pass = SecurityFacade.authenticate(accesspoint, principal, password);
+				boolean pass = CoreEngine.getCoreFacade().authenticate(accesspoint, principal, password);
 				
 				if(pass){
 					String mesg = super.getMessage("mesg.pwd.pass");
@@ -209,7 +209,7 @@ public class AuthenAPIController extends BaseController{
 					payload.setIssueAt(DateTimeUtils.now());
 					payload.setExpireTime(new Date(System.currentTimeMillis() + 60 * 60 * 1000 ));
 					
-					String token = SecurityFacade.newToken(accesspoint, payload);
+					String token = CoreEngine.getCoreFacade().newToken(accesspoint, payload);
 					result = ActionResult.success(mesg);
 					result.getMeta().setCode(AuthTokenState.VALID_TOKEN.name());
 					result.setData(token);

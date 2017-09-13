@@ -1,69 +1,86 @@
 package com.gp.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.Locale;
 
-import com.gp.common.IdKey;
-import com.gp.exception.CoreException;
-import com.gp.exception.ServiceException;
+import com.gp.common.AccessPoint;
+import com.gp.common.GPrincipal;
+import com.gp.common.JwtPayload;
 import com.gp.dao.info.AuditInfo;
+import com.gp.dao.info.SysOptionInfo;
+import com.gp.dao.info.TokenInfo;
+import com.gp.exception.CoreException;
 import com.gp.info.InfoId;
-import com.gp.svc.AuditService;
-import com.gp.svc.CommonService;
 
-/**
- * CoreFacade provides methods to handle the core event data
- * <ol>
- *     <li>process the audit event data</li>
- *     <li>process the action log data</li>
- *     <li>process the core event and generate the notification</li>
- * </ol>
- *
- * @author  gary diao
- * @version  0.1 2015-10-10
- *
- **/
-@Component
-public class CoreFacade {
+public interface CoreFacade {
 
-	static Logger LOGGER = LoggerFactory.getLogger(CoreFacade.class);
-	
-	private static AuditService auditservice;
-
-	private static CommonService idService;
-
-	@Autowired
-	private CoreFacade(AuditService auditservice,
-					   CommonService idService){
-		
-		CoreFacade.auditservice = auditservice;
-		CoreFacade.idService = idService;
-	}
+	/**
+	 * Persist the audit information 
+	 * 
+	 * @param operaudit the audit information of operation
+	 **/
+	InfoId<Long> persistAudit(AuditInfo operaudit) throws CoreException;
 	
 	/**
-	 * Audit the verbs generated from operation, here not user AuditServiceConext as for no need to collect audit information.
-	 * otherwise it falls into dead loop.
+	 * Get the message pattern from dictionary 
 	 * 
-	 * @param auditlist the audit data of operation
-	 * 
+	 * @param locale the locale setting
+	 * @param dictKey the key of dictionary entry, eg. excp.find.workgroup 
 	 **/
-	public static InfoId<Long> persistAudit(AuditInfo auditinfo) throws CoreException{
-		
-		if(null == auditinfo)
-			return null;
-		
-		try {
-			// retrieve and set audit id
-			InfoId<Long> auditId = idService.generateId( IdKey.GP_AUDITS, Long.class);
-			auditinfo.setInfoId(auditId); 
-
-			auditservice.addAudit( auditinfo);
-			return auditId;
-		} catch (ServiceException e) {
-			throw new CoreException("Fail to persist audit log.",e );
-		}
-	}
-
+	String findMessagePattern(Locale locale, String dictKey);
+	
+	/**
+	 * Find the bean property name, user hibernate validator to check the data.
+	 * but the property name is bean property, here convert the bean property name 
+	 * to localized string. eg. sourceId = 来源ID
+	 * 
+	 * @param locale the locale setting
+	 * @param dictKey the key of dictionary entry
+	 **/
+	String findPropertyName(Locale locale, String dictKey);
+	
+	/**
+	 * find the system options by group key 
+	 **/
+	SysOptionInfo findSystemOption(AccessPoint accesspoint,
+				GPrincipal principal,
+				String optionKey)throws CoreException;
+	
+	/**
+	 * Find the jwt token by token Id 
+	 **/
+	TokenInfo findToken(AccessPoint accesspoint,
+			InfoId<Long> tokenId) throws CoreException;
+	
+	/**
+	 * Find the principal by userId, account and type
+	 **/
+	GPrincipal findPrincipal(AccessPoint accesspoint,
+			InfoId<Long> userId,
+			String account, String type) throws CoreException;
+	
+	/**
+	 * Reissue a new token by JWT payload, there will be a token per subject & audience.
+	 * 
+	 * @param payload the JWT payload
+	 * @return String the JWT token string 
+	 **/
+	String reissueToken(AccessPoint accesspoint,GPrincipal principal, JwtPayload payload) throws CoreException;
+	
+	/**
+	 * Remove the token by token Id 
+	 **/
+	boolean removeToken(AccessPoint accesspoint,GPrincipal principal, InfoId<Long> tokenId) throws CoreException;
+	
+	/**
+	 * authenticate the password
+	 **/
+	Boolean authenticate(AccessPoint accesspoint, GPrincipal principal,  String password)throws CoreException;
+	
+	/**
+	 * create a new token by JWT payload, there will be a token per subject & audience.
+	 * 
+	 * @param payload the JWT payload
+	 * @return String the JWT token string 
+	 **/
+	String newToken(AccessPoint accesspoint, JwtPayload payload) 	throws CoreException;
 }

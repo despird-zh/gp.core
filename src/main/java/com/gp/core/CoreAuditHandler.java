@@ -39,14 +39,14 @@ public class CoreAuditHandler implements EventHandler<RingEvent>{
 		}
 
 		CoreEventLoad coreload = (CoreEventLoad) payload;
-		persistLocal(coreload);
+		persistAuditEvent(coreload);
 	}
 
 
 	/**
 	 * Persist the audit data locally to database directly. 
 	 **/
-	private void persistLocal(CoreEventLoad payload) throws RingEventException {
+	private void persistAuditEvent(CoreEventLoad payload) throws RingEventException {
 
 		// prepare access point
 		AccessPoint apt = payload.getAccessPoint();
@@ -82,7 +82,7 @@ public class CoreAuditHandler implements EventHandler<RingEvent>{
 		}
 		try {
 			// store data to database.
-			InfoId<Long> auditId = CoreFacade.persistAudit(operaudit);
+			InfoId<Long> auditId = CoreEngine.getCoreFacade().persistAudit(operaudit);
 			payload.setAutidId(auditId);
 		} catch (CoreException e) {
 			

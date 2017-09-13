@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.gp.core.DictionaryFacade;
+import com.gp.core.CoreEngine;
 import com.gp.exception.BaseException;
 import com.gp.validate.ValidateMessage;
 
@@ -76,7 +76,7 @@ public class CoreException extends BaseException{
      **/
     private String getMessagePattern(Locale locale, String code){
 		
-		String messagePattern = DictionaryFacade.findMessagePattern(locale, code);
+		String messagePattern = CoreEngine.getCoreFacade().findMessagePattern(locale, code);
 		return StringUtils.isBlank(messagePattern) ? code : messagePattern;
     }
     
@@ -85,7 +85,7 @@ public class CoreException extends BaseException{
      **/
     private String getPropertyName(Locale locale, String code){
 		
-		String messagePattern = DictionaryFacade.findPropertyName(locale, code);
+		String messagePattern = CoreEngine.getCoreFacade().findPropertyName(locale, code);
 		return StringUtils.isBlank(messagePattern) ? code : messagePattern;
     }
     

@@ -30,8 +30,7 @@ import com.gp.common.IdKeys;
 import com.gp.common.JwtPayload;
 import com.gp.common.GPrincipal;
 import com.gp.common.SystemOptions;
-import com.gp.core.MasterFacade;
-import com.gp.core.SecurityFacade;
+import com.gp.core.CoreEngine;
 import com.gp.dao.info.SysOptionInfo;
 import com.gp.dao.info.TokenInfo;
 import com.gp.exception.CoreException;
@@ -176,13 +175,13 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 
 				try{
 					InfoId<Long> tokenId = IdKeys.getInfoId(IdKey.GP_TOKENS, NumberUtils.toLong(jwtPayload.getJwtId()));
-					TokenInfo tokenInfo = SecurityFacade.findToken(accesspoint, tokenId);
+					TokenInfo tokenInfo = CoreEngine.getCoreFacade().findToken(accesspoint, tokenId);
 					// check if the token record exists
 					if(tokenInfo == null){
 						// not find any token in db
 						state = AuthTokenState.GHOST_TOKEN;
 					}else{
-						SysOptionInfo secret = MasterFacade.findSystemOption(accesspoint, GroupUsers.PSEUDO_USER, SystemOptions.SECURITY_JWT_SECRET);
+						SysOptionInfo secret = CoreEngine.getCoreFacade().findSystemOption(accesspoint, GroupUsers.PSEUDO_USER, SystemOptions.SECURITY_JWT_SECRET);
 						
 						if(!StringUtils.equals(tokenInfo.getJwtToken(), token)){
 							
@@ -204,7 +203,7 @@ public class ServiceTokenFilter extends OncePerRequestFilter {
 								// attach the state to request
 								request.setAttribute(FILTER_STATE, state);
 								// attach principal to request
-								GPrincipal principal = SecurityFacade.findPrincipal(accesspoint, null, jwtPayload.getSubject(), null);
+								GPrincipal principal = CoreEngine.getCoreFacade().findPrincipal(accesspoint, null, jwtPayload.getSubject(), null);
 								ExWebUtils.setPrincipal(httpRequest, principal);
 								// a valid token, continue the further process
 								filterChain.doFilter(request, response);
