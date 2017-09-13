@@ -3,7 +3,7 @@ package com.gp.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.gp.core.CoreConstants;
 /**

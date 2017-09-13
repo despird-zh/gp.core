@@ -31,7 +31,6 @@ import org.springframework.web.util.WebUtils;
 import com.gp.common.AccessPoint;
 import com.gp.common.GPrincipal;
 import com.gp.common.SystemOptions;
-import com.gp.util.ConfigSettingUtils;
 
 /**
  * @author Gary Diao 
@@ -239,8 +238,8 @@ public abstract class ExWebUtils extends WebUtils{
 		
 		String client = request.getHeader("User-Agent");
 		String host = request.getRemoteHost();
-		String app = ConfigSettingUtils.getSystemOption(SystemOptions.SYSTEM_APP);
-		String version = ConfigSettingUtils.getSystemOption(SystemOptions.SYSTEM_VERSION);
+		String app = ConfigUtils.getSystemOption(SystemOptions.SYSTEM_APP);
+		String version = ConfigUtils.getSystemOption(SystemOptions.SYSTEM_VERSION);
 		
 		AccessPoint ap = new AccessPoint(client, host, app, version);
 		

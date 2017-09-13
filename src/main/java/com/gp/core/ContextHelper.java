@@ -12,7 +12,7 @@ import com.gp.common.ServiceContext;
 import com.gp.common.SystemOptions;
 import com.gp.exception.BaseException;
 import com.gp.exception.CoreException;
-import com.gp.util.ConfigSettingUtils;
+import com.gp.web.util.ConfigUtils;
 
 /**
  * Provides a way to build context object, possible implements SPI in future
@@ -63,7 +63,7 @@ public class ContextHelper {
 	 **/
 	public static ServiceContext buildServiceContext(GPrincipal principal, AccessPoint accesspoint){
 		
-		String audit = ConfigSettingUtils.getSystemOption(SystemOptions.AUDIT_ENABLE);
+		String audit = ConfigUtils.getSystemOption(SystemOptions.AUDIT_ENABLE);
 		//GeneralConfig.getString(GeneralConstants.ENV_AUDIT_ENABLE);
 		
 		audit = StringUtils.isBlank(audit) ? "true" : audit;
