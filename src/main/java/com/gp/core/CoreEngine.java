@@ -11,7 +11,7 @@ import com.gp.exception.BaseException;
 import com.gp.launcher.CoreInitializer;
 import com.gp.launcher.Lifecycle;
 import com.gp.launcher.Lifecycle.LifeState;
-import com.gp.launcher.LifecycleHooker;
+import com.gp.launcher.LifecycleListener;
 
 /**
  * CoreFacade maintains a delegate instance which implements Lifecycle.
@@ -96,7 +96,7 @@ public class CoreEngine{
 	 * Register the life cycle listener
 	 * @param listener  
 	 **/
-	public static void regLifecycleHooker(LifecycleHooker hooker) {
+	public static void regLifecycleHooker(LifecycleListener hooker) {
 		
 		coreDelegator.regLifecycleHooker(hooker);
 	}
@@ -105,7 +105,7 @@ public class CoreEngine{
 	 * Unregister the life cycle listener
 	 * @param listener  
 	 **/
-	public static void unregLifecycleHooker(LifecycleHooker hooker) {
+	public static void unregLifecycleHooker(LifecycleListener hooker) {
 
 		coreDelegator.unregLifecycleHooker(hooker);
 	}
